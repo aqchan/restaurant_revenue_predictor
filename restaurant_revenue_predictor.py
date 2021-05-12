@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
 from models.baseline_model import baseline_model
-from models.linear_regression import simple_lin_reg_model
+from models.linear_regression import lin_reg_model
 from models.linear_regression_regularized import lin_reg_l2_model
 from models.rf_regression import rf_model
 from models.neural_network import nn_model
@@ -54,8 +54,8 @@ def pre_process(training_df, testing_df):
     return X_train, y_train, X_test
 
 # Write and export to csv
-def export_prediction(y_pred, file_name):
-    prediction_df = Id
+def export_prediction(Id, y_pred, file_name):
+    prediction_df = Id.copy(deep=True)
     prediction_df.insert(1, "Prediction", y_pred)
     print(prediction_df)
     prediction_df.to_csv('predictions/' + file_name, index=False)
@@ -72,23 +72,23 @@ if __name__ == "__main__":
 
     # Baseline: Mean Revenue
     baseline_pred = baseline_model(training_df, testing_df)
-    export_prediction(baseline_pred, 'baseline_prediction.csv')
+    export_prediction(Id, baseline_pred, 'baseline_prediction.csv')
 
     # Linear regression with city group
-    simple_lin_reg_pred = simple_lin_reg_model(training_df, testing_df, y_train)
-    export_prediction(simple_lin_reg_pred, 'simple-lin-reg-prediction.csv')
+    lin_reg_pred = lin_reg_model(training_df, testing_df, y_train)
+    export_prediction(Id, lin_reg_pred, 'lin_reg_prediction.csv')
 
     # Pre-process data for the remaining models
     X_train, y_train, X_test = pre_process(training_df, testing_df)
 
     # Linear regression with L2 regularization
     lin_reg_l2_pred = lin_reg_l2_model(X_train, y_train, X_test)
-    export_prediction(lin_reg_l2_pred, 'lin_reg_l2_prediction.csv')
+    export_prediction(Id, lin_reg_l2_pred, 'lin_reg_l2_prediction.csv')
 
     # Random forest regression
     rf_pred = rf_model(X_train, y_train, X_test)
-    export_prediction(rf_pred, 'rf_prediction.csv')
+    export_prediction(Id, rf_pred, 'rf_prediction.csv')
 
     # 3-layer neural network
     nn_pred = nn_model(X_train, y_train, X_test)
-    export_prediction(nn_pred, 'keras_nn_prediction.csv')
+    export_prediction(Id, nn_pred, 'nn_prediction.csv')

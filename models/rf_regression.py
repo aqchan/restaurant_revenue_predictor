@@ -2,10 +2,8 @@ import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import RandomizedSearchCV
 
+# Random Forest Regressor on all features using the optimal parameters
 def rf_model(X_train, y_train, X_test):
-    # Random Forest Regressor on all features using the optimal parameters
-    # rf = RandomForestRegressor(n_estimators=1000, min_samples_split=2, min_samples_leaf=2, max_features='sqrt',
-    #                            max_depth=60, bootstrap=True).fit(X_train, y_train)
 
     rf = find_optimal_hyperparameters(X_train, y_train)
     print("Best hyperparameters:", rf.best_params_)
@@ -13,7 +11,8 @@ def rf_model(X_train, y_train, X_test):
     y_pred = rf.predict(X_test)
     return y_pred
 
-
+# Find the optimal hyperparameters using RandomizedSearchCV
+# Adapted from: https://towardsdatascience.com/hyperparameter-tuning-the-random-forest-in-python-using-scikit-learn-28d2aa77dd74
 def find_optimal_hyperparameters(X_train, y_train):
 
     # Number of trees in random forest

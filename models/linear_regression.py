@@ -1,6 +1,8 @@
 from sklearn.linear_model import LinearRegression
 
-def simple_lin_reg_model(training_df, testing_df, y_train):
+# This linear regression model only uses the City Group column as a predictor
+def lin_reg_model(training_df, testing_df, y_train):
+
     # Convert all columns with a space to an underscore
     training_df.columns = training_df.columns.str.replace(' ', '_')
     testing_df.columns = testing_df.columns.str.replace(' ', '_')
