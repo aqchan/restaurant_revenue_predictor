@@ -1,9 +1,10 @@
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-from models.mean_revenue import baseline_model
-from models.simple_linear_regression import simple_lin_reg_model
+
+from models.baseline_model import baseline_model
+from models.linear_regression import simple_lin_reg_model
 from models.linear_regression_regularized import lin_reg_l2_model
-from models.random_forest_regression import rf_model
+from models.rf_regression import rf_model
 from models.neural_network import nn_model
 
 # One hot encoding
